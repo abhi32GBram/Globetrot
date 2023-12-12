@@ -1,0 +1,21 @@
+Commit for 
+Added Local Tunneling using Ngrok : 
+ * ngrok allows you to expose your local development environment to the public internet securely. 
+ * This means you can access your application or website running on your machine (localhost) from anywhere in the world through an ngrok-generated URL. 
+ * This is particularly useful for:
+-- collaborating with others
+-- Testing APIs
+-- Public demos
+
+Installing Ngrok by : 
+-- Downloading the zip file
+-- Setting the system env variable path of the folder address where the ngrok.exe is present
+-- Make an account on Ngrok for getting your own Authtoken 
+   --- Put it in the terminal and specify the port number (same as your application )
+   ## Make sure to keep the app running in localhost 
+   --- A Forwading link will be generated everytime we launch ngrok 
+-- Go to the Domains section in Cloud Edge of Ngrok dashboard and get a new domain which is free but and only 1 per account
+   --- Use that URL and specify the port number in the end
+   ## This is just so that we dont always generate new Forwading links when accessing through Ngrok
+
+
