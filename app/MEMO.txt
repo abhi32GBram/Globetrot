@@ -18,4 +18,28 @@ Installing Ngrok by :
    --- Use that URL and specify the port number in the end
    ## This is just so that we dont always generate new Forwading links when accessing through Ngrok
 
+-------------------------------------------------------------------------------------------------------------------------------------------------
+Commit for 
+Configuring Webhooks : 
+
+* Webhooks are like automated messengers for websites and applications. 
+* They allow them to communicate with each other instantly whenever something specific happens.
+* Think of them as little robots that are constantly listening for events and then sending out notifications when those events occur.
+
+Clerk Webhooks : 
+
+## Everyday stuff 
+-- Run = npm run dev
+-- Run = Domain link from Ngrok
+
+--- In the Clerk Dashboard go to the Webhooks section and hit - create new 
+--- Get the perma domain from the running ngrok terminal and put in the Endpoints field of Clerk followed by - /api/webhooks/clerk
+--- Enable all the User event in the Messge Filtering section below; Click Create
+--- Copy the Sign-In Secret and rename it to CLERK_WEBHOOK_SECRET in the env file 
+--- Install the svix library using - npm install svix
+--- Make a folder structure in the App directort - app\api\webhooks\clerk\route.ts 
+--- To enable Nextjs to be able to send Messages in the middleware file add this in the authMiddleware object :
+   == publicRoutes: ["/api/webhooks(.*)"]
+--- Write the necessary conditionals in the route.ts file to manage the CRUD ops of the user for the main app & reflect changes in the DB 
+
 
