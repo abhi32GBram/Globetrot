@@ -43,3 +43,4 @@ Clerk Webhooks :
 --- Write the necessary conditionals in the route.ts file to manage the CRUD ops of the user for the main app & reflect changes in the DB 
 
 
+20623

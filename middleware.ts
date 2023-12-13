@@ -8,8 +8,9 @@ import { authMiddleware } from "@clerk/nextjs";
 //In this case, all routes starting with /api/webhooks are designated as public and will not require authentication when accessed. 
 // This could be particularly useful for routes that are meant to be accessed by external services like webhook endpoints, where authentication might not be necessary or handled differently.
 
+// "/" is for the user to be able to land on the home page without the need to sign-in 
 export default authMiddleware({
-    publicRoutes: ["/api/webhooks(.*)"]
+    publicRoutes: ["/", "/api/webhooks(.*)"]
 });
 
 export const config = {
