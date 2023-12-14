@@ -3,9 +3,11 @@
 import { toast } from "sonner";
 import { useTransition } from "react";
 
+import { Button } from "@/components/ui/button";
 
 import { onFollow, onUnfollow } from "@/actions/follow";
-import { Button } from "@/components/ui/button";
+import { onBlock, onUnblock } from "@/actions/block";
+
 
 interface ActionsProps {
     isFollowing: boolean;
@@ -18,10 +20,10 @@ export const Actions = ({
     userId,
 }: ActionsProps) => {
 
-      // Track transition state for button interaction
+    // Track transition state for button interaction
     const [isPending, startTransition] = useTransition();
 
-      // Function to handle follow action
+    // Function to handle follow action
     const handleFollow = () => {
         // Start transition and trigger follow action with user ID
         startTransition(() => {
@@ -49,6 +51,15 @@ export const Actions = ({
         }
     }
 
+    const handleBlock = () => {
+        startTransition(() => {
+            onBlock(userId)
+                .then((data) => toast.success(`gottach ${data.blocked.username}`))
+                .catch(() => toast.error("Something Went Wrong"))
+        })
+
+    }
+
     return (
         <>
             <Button
@@ -57,6 +68,10 @@ export const Actions = ({
                 variant="primary"
             >
                 {isFollowing ? "Unfollow" : "Follow"}
+            </Button>
+            <br />
+            <Button onClick={handleBlock} disabled={isPending}>
+                UB please
             </Button>
 
         </>
