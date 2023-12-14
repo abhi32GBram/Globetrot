@@ -1,7 +1,7 @@
 // Import necessary components and services
 import { getRecommended } from "@/lib/recommended-service"; // Importing the service to get recommended items
 import { Wrapper } from "./wrapper"; // Importing a Wrapper component for layout purposes
-import Toggle from "./toggle"; // Importing a Toggle component, possibly for UI interactivity
+import Toggle, { ToggleSkeleton } from "./toggle"; // Importing a Toggle component, possibly for UI interactivity
 import { Recommended } from "./recommended"; // Importing a Recommended component to display recommended items
 import { RecommendedSkeleton } from "./user-item"; // Importing a skeleton screen for loading state of recommended items
 
@@ -26,7 +26,9 @@ export const SidebarSkeleton = () => {
     return (
         // JSX for the sidebar skeleton
         <aside className="fixed left-0 flex flex-col w-[70px] lg:w-60 h-full bg-background border-r border-[] z-50">
+            <ToggleSkeleton />
             <RecommendedSkeleton /> {/* Render the skeleton screen for recommended items */}
+
         </aside>
     )
 }

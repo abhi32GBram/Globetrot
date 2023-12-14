@@ -3,6 +3,7 @@ import { Inter } from 'next/font/google'
 import { ClerkProvider } from '@clerk/nextjs'
 import { dark } from '@clerk/themes'
 import { ThemeProvider } from '@/components/theme-provider'
+import { Toaster } from 'sonner'
 
 import './globals.css'
 
@@ -22,7 +23,9 @@ export default function RootLayout({
     <ClerkProvider appearance={{ baseTheme: dark }}>
       <html lang="en">
         <body className={inter.className}>
+
           <ThemeProvider attribute="class" forcedTheme="dark" storageKey="globetrot-theme" >
+            <Toaster theme="light" position="bottom-center" richColors />
             {children}
           </ThemeProvider>
         </body>

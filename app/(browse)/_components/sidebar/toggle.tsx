@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button' // Importing a custom Button com
 import { useSidebar } from '@/store/use-sidebar' // Importing a custom hook for managing sidebar state.
 import { ArrowLeftFromLine, ArrowRightFromLineIcon } from 'lucide-react' // Importing icons from the lucide-react library.
 import { Hint } from '@/components/hint' // Importing a custom Hint component for displaying tooltips.
+import { Skeleton } from '@/components/ui/skeleton'
 
 const Toggle = () => { // Declaring the Toggle functional component.
 
@@ -49,3 +50,13 @@ const Toggle = () => { // Declaring the Toggle functional component.
 }
 
 export default Toggle // Exporting the Toggle component as the default export of this module.
+
+
+export const ToggleSkeleton = () => {
+    return (
+        <div className='p-3 pl-6 mb-2 hidden lg:flex items-center justify-between w-full '>
+            <Skeleton className='h-6 w-[100px]' />
+            <Skeleton className='h-6 w-6' />
+        </div>
+    )
+}

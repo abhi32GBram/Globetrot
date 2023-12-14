@@ -54,3 +54,20 @@ Sidebar :
 -- Installing the Usehooks Library (npm i usehooks-ts) :
    --- React hook library written in TypeScript.
    --- It provides a collection of ready-to-use hooks for common tasks in React applications.
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+
+Commit For 
+Follower Service :
+
+-- Using Server Actions to handle the API-less mutations :
+   ###  Mutation refers to any operation that modifies data on the server.
+   --- "api-less mutations" refers to the ability to perform data mutations on the server without needing to define explicit API routes.
+   ---  This is possible because server actions themselves act as endpoints for receiving data and performing mutations.
+   ---  Server actions in Next.js enable "api-less mutations" by removing the need for explicit API routes to handle data mutations on the server. 
+
+-- Installing the Sonner (npm i sonner):
+   --- An opinionated toast component for React.
+   --- It's a popular library for displaying informative messages and notifications within your React applications.
+
+   
