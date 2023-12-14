@@ -1,6 +1,32 @@
 import { db } from '@/lib/db'
 import { getSelf } from './auth-service'
 
+// Function to fetch a user's followed users
+export const getFollowedUsers = async () => {
+    try {
+        // Get the current user's information
+        const self = await getSelf();
+
+        // Find all follow relationships where the current user is the follower
+        const followedUsers = await db.follow.findMany({
+            where: {
+                followerId: self.id, // Filter by current user's ID
+            },
+            include: {
+                following: true, // Include the details of the followed users
+            },
+        });
+
+        // Return the list of followed users
+        return followedUsers;
+    } catch (error) {
+        // Handle any errors and return an empty array
+        console.error(`Error Fetching Followed Users: ${error}`);
+        return [];
+    }
+};
+
+
 // Function to check if the current user follows another user
 export const isFollowingUser = async (id: string) => {
     try {

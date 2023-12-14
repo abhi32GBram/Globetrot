@@ -5,6 +5,7 @@ import { useSidebar } from '@/store/use-sidebar' // Importing a custom hook for 
 import { useState, useEffect } from 'react'
 import { ToggleSkeleton } from './toggle'
 import { RecommendedSkeleton } from './user-item'
+import { FollowingSkeleton } from './following'
 interface WrapperProps {
     children: React.ReactNode // Declaring the type for the children prop, which can be any valid React node.
 }
@@ -22,6 +23,7 @@ export const Wrapper = ({ children }: WrapperProps) => { // Defining the Wrapper
         return (
             <aside className='fixed left-0 flex flex-col w-[70px] lg:w-60 h-full bg-background border-r border-[#bba2eb] z-50'>
                 <ToggleSkeleton />
+                <FollowingSkeleton />
                 <RecommendedSkeleton />
             </aside>
         )
