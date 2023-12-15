@@ -3,7 +3,7 @@
 export default function Home() {
   return (
     <div>
-      Home Page Stuff
+      THIS IST THE HOME PAGE OR LANDING PAGE ...
     </div>
   )
 }
