@@ -1,110 +1,4 @@
-// import { Webhook } from 'svix'
-// import { headers } from 'next/headers'
-// import { WebhookEvent } from '@clerk/nextjs/server'
 
-// import { db } from '@/lib/db'
-
-// export async function POST(req: Request) {
-
-//     // You can find this in the Clerk Dashboard -> Webhooks -> choose the webhook
-//     const WEBHOOK_SECRET = process.env.CLERK_WEBHOOK_SECRET
-
-//     if (!WEBHOOK_SECRET) {
-//         throw new Error('Please add CLERK_WEBHOOK_SECRET from Clerk Dashboard to .env or .env.local')
-//     }
-
-//     const headerPayload = headers();
-//     const svix_id = headerPayload.get("svix-id");
-//     const svix_timestamp = headerPayload.get("svix-timestamp");
-//     const svix_signature = headerPayload.get("svix-signature");
-
-//     if (!svix_id || !svix_timestamp || !svix_signature) {
-//         return new Response('Error occured -- no svix headers', {
-//             status: 400
-//         })
-//     }
-
-//     // Get the body
-//     const payload = await req.json()
-//     const body = JSON.stringify(payload);
-
-//     // Create a new Svix instance with your secret.
-//     const wh = new Webhook(WEBHOOK_SECRET);
-
-//     let evt: WebhookEvent
-
-
-//     // Verify the payload with the headers
-//     try {
-//         evt = wh.verify(body, {
-//             "svix-id": svix_id,
-//             "svix-timestamp": svix_timestamp,
-//             "svix-signature": svix_signature,
-//         }) as WebhookEvent
-//     } catch (err) {
-//         console.error('Error verifying webhook:', err);
-//         return new Response('Error occured', {
-//             status: 400
-//         })
-//     }
-//     // Get the ID and type
-//     // const { id } = evt.data; **** NOT NEEED 
-//     const eventType = evt.type;
-
-//     // console.log(`Webhook with and ID of ${id} and type of ${eventType}`) *** BOTH AREN'T  NEEDED IN PROD 
-//     // console.log('Webhook body:', body)
-
-
-//     // FOLLOWING CONDITIONALS ARE MADE BY ME 
-
-//     // When a user is created on that service or application, it sends a webhook notification to the code,
-//     // which triggers the creation of a corresponding user in the database.
-//     if (eventType === "user.created") {
-//         await db.user.create({
-//             data: {
-//                 externalUserId: payload.data.id,
-//                 username: payload.data.username,
-//                 imageUrl: payload.data.image_url,
-//             }
-
-//         })
-//     }
-
-//     // Finding the user using 'externalUserId' and then updating their info onto the DB 
-//     if (eventType === "user.updated") {
-//         const currentUser = await db.user.findUnique({
-//             where: {
-//                 externalUserId: payload.data.id,
-
-//             }
-//         })
-//         // If the user is not found then it'll throw a 404
-//         if (!currentUser) {
-//             return new Response("User Not Found !!", { status: 404 })
-//         }
-
-//         await db.user.update({
-//             where: {
-//                 externalUserId: payload.data.id,
-//             },
-//             data: {
-//                 username: payload.data.username,
-//                 imageUrl: payload.data.image_url,
-//             }
-//         })
-//     }
-
-//     if(eventType === "user.deleted"){
-//         await db.user.delete({
-//             where:{
-//                 externalUserId: payload.data.id,
-//             },
-//         })
-//     }
-
-//     return new Response('', { status: 200 })
-
-// }
 
 import { Webhook } from 'svix'
 import { headers } from 'next/headers'
@@ -173,14 +67,24 @@ export async function POST(req: Request) {
 
     // Conditional logic based on the eventType
     if (eventType === "user.created") {
+
         // Handle user creation event
+        // Create a new user record in the database using the Prisma client
         await db.user.create({
+            // Specify the data for the new user record
             data: {
-                externalUserId: payload.data.id,
-                username: payload.data.username,
-                imageUrl: payload.data.image_url,
+                externalUserId: payload.data.id,       // Set the externalUserId field with the ID from payload data
+                username: payload.data.username,       // Set the username field with the username from payload data
+                imageUrl: payload.data.image_url,      // Set the imageUrl field with the image URL from payload data
+                stream: {
+                    create: {
+                        // Create a related 'stream' record associated with this user
+                        name: `${payload.data.username}'s Stream`  // Set the name of the stream, personalized with the user's username
+                    }
+                }
             }
         });
+
     } else if (eventType === "user.updated") {
         // Handle user update event
         const currentUser = await db.user.findUnique({

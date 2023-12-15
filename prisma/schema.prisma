@@ -7,7 +7,8 @@ datasource db {
 
 // Client-side code generation
 generator client {
-  provider = "prisma-client-js" // Generate TypeScript client for Prisma interactions
+  provider        = "prisma-client-js" // Generate TypeScript client for Prisma interactions
+  previewFeatures = ["fullTextSearch", "fullTextIndex"]
 }
 
 // User model definition
@@ -16,34 +17,55 @@ model User {
   id String @id @default(uuid())
 
   // Username (unique)
-  username String @unique
-
+  username       String  @unique
   // User's profile picture URL
-  imageUrl String @db.Text
-
+  imageUrl       String  @db.Text
   // External user ID (e.g., from social login)
-  externalUserId String @unique
-
+  externalUserId String  @unique
   // User bio (optional)
-  bio String? @db.Text
+  bio            String? @db.Text
 
   // Following relationships
-  following Follow[] @relation("Following")
-
+  following  Follow[] @relation("Following")
   // Followers
   followedBy Follow[] @relation("FollowedBy")
 
   // Blocking relationships (users they block)
-  blocking Block[] @relation("Blocking")
-
+  blocking  Block[] @relation("Blocking")
   // Users who block this user
   blockedBy Block[] @relation("BlockedBy")
 
+  stream Stream?
+
   // Creation timestamp
   createdAt DateTime @default(now())
-
   // Last updated timestamp
   updatedAt DateTime @updatedAt
+}
+
+model Stream {
+  id           String  @id @default(uuid()) // Unique identifier for each stream, defaulting to a UUID
+  name         String  @db.Text // Name of the stream, stored as text
+  thumbnailUrl String? @db.Text // Optional URL for the stream's thumbnail, stored as text
+
+  ingressId String? @unique // Optional unique identifier for ingress, unique across all streams
+  serverUrl String? @db.Text // Optional URL for the streaming server, stored as text
+  streamKey String? @db.Text // Optional streaming key, stored as text
+
+  isLive              Boolean @default(false) // Flag to indicate if the stream is live, defaults to false
+  isChatEnabled       Boolean @default(true) // Flag to indicate if chat is enabled, defaults to true
+  isChatDelay         Boolean @default(false) // Flag for chat delay, defaults to false
+  isChatFollowersOnly Boolean @default(false) // Flag for chat accessibility to followers only, defaults to false
+
+  userId String @unique // Unique identifier for the associated user
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade) // Establishes a relationship with the User model, cascading on delete
+
+  createdAt DateTime @default(now()) // Timestamp for when the stream record was created, defaults to the current time
+  updatedAt DateTime @updatedAt // Timestamp for the last update, automatically updated on each change
+
+  @@index([userId]) // Index for optimizing queries filtering by userId
+  @@index([ingressId]) // Index for optimizing queries filtering by ingressId
+  @@fulltext([name]) // Full-text index on the name field for efficient searching
 }
 
 // Follow model definition
@@ -95,61 +117,3 @@ model Block {
   @@index([blockerId])
   @@index([blockedId])
 }
-// ---------------------------------------------------------------------------------
-// KEEPING THE UN-COMMENTED CODE FOR THE BEING SAFE 
-// datasource db {
-//   provider     = "mysql"
-//   url          = env("DATABASE_URL")
-//   relationMode = "prisma"
-// }
-
-// generator client {
-//   provider = "prisma-client-js"
-// }
-
-// model User {
-//   id String @id @default(uuid())
-
-//   username       String  @unique
-//   imageUrl       String  @db.Text
-//   externalUserId String  @unique
-//   bio            String? @db.Text
-
-//   following  Follow[] @relation("Following")
-//   followedBy Follow[] @relation("FollowedBy")
-
-//   blocking  Block[] @relation("Blocking")
-//   blockedBy Block[] @relation("BlockedBy")
-
-//   createdAt DateTime @default(now())
-//   updatedAt DateTime @updatedAt
-// }
-
-// model Follow {
-//   id          String @id @default(uuid())
-//   followerId  String
-//   followingId String
-
-//   follower  User @relation(name: "Following", fields: [followerId], references: [id], onDelete: Cascade)
-//   following User @relation(name: "FollowedBy", fields: [followingId], references: [id], onDelete: Cascade)
-
-//   createdAt DateTime @default(now())
-//   updatedAt DateTime @updatedAt
-
-//   @@unique([followerId, followingId])
-//   @@index([followerId])
-//   @@index([followingId])
-// }
-
-// model Block {
-//   id        String @id @default(uuid())
-//   blockerId String
-//   blockedId String
-
-//   blocker User @relation(name: "Blocking", fields: [blockerId], references: [id], onDelete: Cascade)
-//   blocked User @relation(name: "BlockedBy", fields: [blockedId], references: [id], onDelete: Cascade)
-
-//   @@unique([blockedId, blockerId])
-//   @@index([blockerId])
-//   @@index([blockedId])
-// }
