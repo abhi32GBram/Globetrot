@@ -81,4 +81,11 @@ Creator Dashboard :
    --- It lets you read the current URL's pathname directly within your React component. 
    --- Provides a convenient way to access the current URL path within your Next.js application.
 
-   
+------------------------------------------------------------------------------------------------------------------------------------------------------
+Commit for 
+Chat & Key Setting :
+
+--- Completed the sub-sections(Key & Chat) 
+   -- Added Key selection, generation, modal for closing and creating connection (FrontEnd)
+   -- Added buttons for Chat options like - Delay, Follower Only, Enable-Disable Entirely (FrontEnd & DB Sync) 
+   -- Made a Temp Route to the Stream sub-section 
