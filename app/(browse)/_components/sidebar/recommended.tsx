@@ -1,7 +1,7 @@
 "use client"
 
 // Import the User model from Prisma client for type definitions.
-import { User } from "@prisma/client";
+import { Stream, User } from "@prisma/client";
 
 // Import the useSidebar hook from the store for managing sidebar state.
 import { useSidebar } from "@/store/use-sidebar";
@@ -11,7 +11,9 @@ import { UserItem } from "./user-item";
 // Define the interface for the RecommendedProps.
 // This specifies that the 'data' prop will be an array of User objects.
 interface RecommendedProps {
-    data: User[]
+    data: (User & {
+        stream: Stream | null
+    })[]
 }
 
 // Define the Recommended component.
@@ -39,7 +41,7 @@ export const Recommended = ({ data }: RecommendedProps) => {
                 {/* Map through each user in the data array and render a UserItem for each */}
                 {
                     data.map((user) => (
-                        <UserItem key={user.id} username={user.username} imageUrl={user.imageUrl} isLive={false} />
+                        <UserItem key={user.id} username={user.username} imageUrl={user.imageUrl} isLive={user.stream?.isLive} />
                     ))
                 }
             </ul>

@@ -99,7 +99,6 @@ Livekit Setup and Config :
    -- Real-time communication platform that enables developers to build interactive audio and video experiences into their applications. 
    -- It provides a set of tools and APIs for handling all the complexities of real-time communication, allowing developers to focus on building engaging features and user    interfaces.
    -- Used here for the generation of Server URL and Stream Key based on the type of protocol - RTPC(Real Time Trans Pro) and/or WHIP()
-
    -- Manages sessions and rooms: Creates and manages live sessions, including participant join/leave actions, room management, and session configuration.
    -- Routes and distributes media streams: Receives audio and video streams from clients, processes them, and routes them efficiently to all participants in the session.
    -- Security and moderation: Implements user authentication, authorization, and session security measures, as well as providing tools for moderation and managing participant behavior.
@@ -111,3 +110,22 @@ Livekit Setup and Config :
 --- Used useRef Hook :
    -- useRef is a hook that lets you create a mutable reference to a value.
    -- This means you can store a value and update it later without triggering a re-render of the component.
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Commit for
+LiveKit Webhook :
+
+--- The RoomServiceClient is used to interact with LiveKit rooms.
+   -- It lists and deletes existing rooms associated with a given host identity.
+   -- This is crucial for setting up a clean state before starting a new streaming session.
+
+--- createIngress function is a key part of starting the streaming process.
+   -- Resets existing ingresses related to the user.
+   -- Configures new ingress options based on the provided ingressType.
+   -- This includes setting up video and audio sources and encoding presets. 
+      -For example, video options might include using a camera as a source and specifying the video encoding preset.
+   -- Creates a new ingress object using these options.
+   -- Throws an error if the ingress creation fails, which is a crucial check to ensure the streaming setup is correct.
+
+   

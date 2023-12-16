@@ -1,7 +1,7 @@
 "use client";
 
 // Import relevant types from Prisma client
-import { Follow, User } from "@prisma/client";
+import { Follow, Stream, User } from "@prisma/client";
 
 // Access sidebar state using useSidebar hook from store
 import { useSidebar } from "@/store/use-sidebar";
@@ -11,7 +11,11 @@ import { UserItem, UserItemSkeleton } from "./user-item";
 
 // Interface for received data props
 interface FollowingProps {
-    data: (Follow & { following: User })[]; // Array of Follow objects with enriched User data
+    data: (Follow & {
+        following: User & {
+            stream: Stream | null
+        }
+    })[]; // Array of Follow objects with enriched User data
 }
 
 export const Following = ({ data }: FollowingProps) => {
@@ -34,6 +38,7 @@ export const Following = ({ data }: FollowingProps) => {
                         key={follow.following.id} // Use following user ID as unique key
                         username={follow.following.username}
                         imageUrl={follow.following.imageUrl}
+                        isLive={follow.following.stream?.isLive}
                     />
                 ))}
             </ul>

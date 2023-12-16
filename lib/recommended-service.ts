@@ -14,10 +14,6 @@ export const getRecommended = async () => {
 
     if (userId) {
         users = await db.user.findMany({
-
-            orderBy: {
-                createdAt: "desc"
-            },
             where: {
                 AND: [{
                     NOT: {
@@ -31,20 +27,28 @@ export const getRecommended = async () => {
                             }
                         }
                     }
-                },{
-                    NOT:{
-                        blocking:{
-                            some :{
+                }, {
+                    NOT: {
+                        blocking: {
+                            some: {
                                 blockedId: userId
                             }
                         }
                     }
                 }]
             },
+            include: {
+                stream: true
+            },
+            orderBy: {
+                createdAt: "desc"
+            },
         })
-
     } else {
         users = await db.user.findMany({
+            include: {
+                stream: true
+            },
             orderBy: {
                 createdAt: "desc"
             }
@@ -55,62 +59,80 @@ export const getRecommended = async () => {
 
 }
 
+//-------------------------------------------------------------------------------------------------------------------
+// WELL COMMENTED COUNTERPART OF THE CODE ABOVE FOR EXPLANAITON WITHOUT BREAKING THE CODE ITSELF 
 
-/// COMMENTED VERSION OF THIS CODE :
-// // import { db } from "@/lib/db";
-// // import { getSelf } from "@/lib/auth-service";
+// Import the database instance from a custom path and a function to get current user's details.
+// // // import { db } from "@/lib/db";
+// // // import { getSelf } from "@/lib/auth-service";
 
-// // // Function to fetch recommended users
-// // export const getRecommended = async () => {
-// //   // Store current user ID (initially null)
-// //   let userId;
+// // // // Define an asynchronous function to get recommended users.
+// // // export const getRecommended = async () => {
+// // //     let userId;
 
-// //   try {
-// //     // Get current user information, if logged in
-// //     const self = await getSelf();
-// //     userId = self.id;
-// //   } catch (error) {
-// //     // Handle error and set user ID to null
-// //     console.error(`Error fetching current user: ${error}`);
-// //     userId = null;
-// //   }
+// // //     // Try to get the current user's details. If an error occurs (e.g., user not logged in), set userId to null.
+// // //     try {
+// // //         const self = await getSelf();
+// // //         userId = self.id;
+// // //     } catch {
+// // //         userId = null;
+// // //     }
 
-// //   // Initialize empty user list
-// //   let users = [];
+// // //     let users = []; // Initialize an array to hold the user data.
 
-// //   // Filter and recommend users only if a user is logged in
-// //   if (userId) {
-// //     users = await db.user.findMany({
-// //       // Order by newest first
-// //       orderBy: { createdAt: "desc" },
-// //       // Filter conditions (multiple AND clauses):
-// //       where: {
-// //         // Exclude the current user
-// //         NOT: { id: userId },
-// //         // Exclude users already followed by the current user
-// //         NOT: {
-// //           followedBy: {
-// //             // Check for any follow relationship where the current user is the follower
-// //             some: { followerId: userId },
-// //           },
-// //         },
-// //         // Exclude users currently blocking the current user
-// //         NOT: {
-// //           blocking: {
-// //             // Check for any block relationship where the current user is blocked
-// //             some: { blockedId: userId },
-// //           },
-// //         },
-// //       },
-// //     });
-// //   } else {
-// //     // If no user is logged in, simply fetch recent users
-// //     users = await db.user.findMany({
-// //       // Order by newest first
-// //       orderBy: { createdAt: "desc" },
-// //     });
-// //   }
+// // //     // Check if a valid userId exists.
+// // //     if (userId) {
+// // //         // Fetch users from the database with specific conditions:
+// // //         users = await db.user.findMany({
+// // //             where: {
+// // //                 AND: [
+// // //                     // The user should not be the current user.
+// // //                     {
+// // //                         NOT: {
+// // //                             id: userId
+// // //                         },
+// // //                     }, 
+// // //                     // The user should not be followed by the current user.
+// // //                     {
+// // //                         NOT: {
+// // //                             followedBy: {
+// // //                                 some: {
+// // //                                     followerId: userId
+// // //                                 }
+// // //                             }
+// // //                         }
+// // //                     },
+// // //                     // The user should not be blocking the current user.
+// // //                     {
+// // //                         NOT: {
+// // //                             blocking: {
+// // //                                 some: {
+// // //                                     blockedId: userId
+// // //                                 }
+// // //                             }
+// // //                         }
+// // //                     }
+// // //                 ]
+// // //             },
+// // //             include: {
+// // //                 stream: true // Include the user's stream details in the response.
+// // //             },
+// // //             orderBy: {
+// // //                 createdAt: "desc" // Order the users by creation time, newest first.
+// // //             },
+// // //         });
+// // //     } else {
+// // //         // If no valid userId, fetch all users without the above conditions.
+// // //         users = await db.user.findMany({
+// // //             include: {
+// // //                 stream: true // Include the user's stream details in the response.
+// // //             },
+// // //             orderBy: {
+// // //                 createdAt: "desc" // Order the users by creation time, newest first.
+// // //             }
+// // //         });
+// // //     }
 
-// //   // Return the list of recommended users
-// //   return users;
-// // };
+// // //     return users; // Return the list of users.
+
+// // // }

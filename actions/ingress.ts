@@ -1,43 +1,39 @@
-"use server"
+"use server";
 
-// Import required components and types from the livekit-server-sdk
 import {
-    IngressAudioEncodingPreset, IngressInput, IngressClient,
-    IngressVideoEncodingPreset, RoomServiceClient, type CreateIngressOptions
+    IngressAudioEncodingPreset,
+    IngressInput,
+    IngressClient,
+    IngressVideoEncodingPreset,
+    RoomServiceClient,
+    type CreateIngressOptions,
 } from "livekit-server-sdk";
-import { TrackSource } from "livekit-server-sdk/dist/proto/livekit_models"; // Import TrackSource from livekit models
-import { db } from "@/lib/db"; // Database connection setup
-import { getSelf } from "@/lib/auth-service"; // Function to get authenticated user details
-import { revalidatePath } from "next/cache"; // Function to revalidate cached paths in Next.js
 
-// Initialize the RoomServiceClient with environment variables
+import { TrackSource } from "livekit-server-sdk/dist/proto/livekit_models";
+
+import { db } from "@/lib/db";
+import { getSelf } from "@/lib/auth-service";
+import { revalidatePath } from "next/cache";
+
 const roomService = new RoomServiceClient(
     process.env.LIVEKIT_API_URL!,
     process.env.LIVEKIT_API_KEY!,
     process.env.LIVEKIT_API_SECRET!,
 );
 
-// Initialize the IngressClient with the API URL
-const ingressClient = new IngressClient(
-    process.env.LIVEKIT_API_URL!,
-);
+const ingressClient = new IngressClient(process.env.LIVEKIT_API_URL!);
 
-// Define an asynchronous function to reset ingresses for a given host identity
-const resetIngresses = async (hostIdentity: string) => {
-    // List all ingresses for the specified room name
+export const resetIngresses = async (hostIdentity: string) => {
     const ingresses = await ingressClient.listIngress({
-        roomName: hostIdentity
+        roomName: hostIdentity,
     });
 
-    // List all rooms for the specified host identity
     const rooms = await roomService.listRooms([hostIdentity]);
 
-    // Delete each room found in the list
     for (const room of rooms) {
         await roomService.deleteRoom(room.name);
     }
 
-    // Delete each ingress found in the list
     for (const ingress of ingresses) {
         if (ingress.ingressId) {
             await ingressClient.deleteIngress(ingress.ingressId);
@@ -45,15 +41,11 @@ const resetIngresses = async (hostIdentity: string) => {
     }
 };
 
-// Define an asynchronous function to create a new ingress
 export const createIngress = async (ingressType: IngressInput) => {
-    // Get details of the currently authenticated user
     const self = await getSelf();
 
-    // Reset ingresses for the authenticated user's ID
     await resetIngresses(self.id);
 
-    // Set up options for creating a new ingress
     const options: CreateIngressOptions = {
         name: self.username,
         roomName: self.id,
@@ -61,48 +53,40 @@ export const createIngress = async (ingressType: IngressInput) => {
         participantIdentity: self.id,
     };
 
-    // Configure options based on the type of ingress input
     if (ingressType === IngressInput.WHIP_INPUT) {
         options.bypassTranscoding = true;
     } else {
         options.video = {
             source: TrackSource.CAMERA,
-            preset: IngressVideoEncodingPreset.H264_1080P_30FPS_3_LAYERS
+            preset: IngressVideoEncodingPreset.H264_1080P_30FPS_3_LAYERS,
         };
         options.audio = {
             source: TrackSource.MICROPHONE,
             preset: IngressAudioEncodingPreset.OPUS_STEREO_96KBPS
         };
-    }
+    };
 
-    // Create a new ingress with the specified options
     const ingress = await ingressClient.createIngress(
-        ingressType, options
+        ingressType,
+        options,
     );
 
-    // Throw an error if the ingress creation fails
     if (!ingress || !ingress.url || !ingress.streamKey) {
-        throw new Error("Failed To Create Ingress ");
+        throw new Error("Failed to create ingress");
     }
 
-    // Update the stream details in the database with the new ingress information
     await db.stream.update({
-        where: {
-            userId: self.id
-        },
+        where: { userId: self.id },
         data: {
             ingressId: ingress.ingressId,
             serverUrl: ingress.url,
-            streamKey: ingress.streamKey
-        }
+            streamKey: ingress.streamKey,
+        },
     });
 
-    // Revalidate the cache for the user's keys path
     revalidatePath(`/u/${self.username}/keys`);
-
-    // Return the created ingress
     return ingress;
-}
+};
 
 
 // ------------------------------------------------------
