@@ -72,7 +72,7 @@ export const createIngress = async (ingressType: IngressInput) => {
     );
 
     if (!ingress || !ingress.url || !ingress.streamKey) {
-        throw new Error("Failed to create ingress");
+        throw new Error("Failed to Create Ingress");
     }
 
     await db.stream.update({

@@ -158,3 +158,18 @@ Granting Viewer Token :
       - Focused on payload extraction: Solely focuses on extracting the payload data, making it ideal for situations where you only need the token's content.
       - Independent of JWT libraries: Can be used independently of other JWT libraries like jsonwebtoken, providing a simpler solution for basic token decoding.
 
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Commit for 
+Video Player (Finally ffs) :
+
+--- Added the main video player by rendering it from the streaming service like OBS
+--- Added the volume controls for conditionally modifying the volume icon states based on the volume level 
+--- Added the fullscreen functionality for toggling fullscreen through the button and/or Esc Key 
+--- Added conditional components based on the state of the stream - loading, offline, online (video player)
+--- Added Guest authorization and access token provision based on if they are logged-in or not using UUID
+--- Added conditional ability to be able to watch the stream if you, the guest happen to be banned by the streamer(host)
+--- Added some misc security measures for the client-side components (route.ts of LiveKit API folder) where sensitive data was being exposed
+--- Added functionality for the screen - video and audio (user mic & pc sounds) are functioning properly with minimal lag 
+
+
