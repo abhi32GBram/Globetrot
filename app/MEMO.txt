@@ -89,3 +89,25 @@ Chat & Key Setting :
    -- Added Key selection, generation, modal for closing and creating connection (FrontEnd)
    -- Added buttons for Chat options like - Delay, Follower Only, Enable-Disable Entirely (FrontEnd & DB Sync) 
    -- Made a Temp Route to the Stream sub-section 
+
+------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Commit for 
+Livekit Setup and Config :
+
+--- Integrated the Livekit SDK ("npm i @livekit/components-react" | "npm i livekit-client" | "npm i livekit-server-sdk " ) for :
+   -- Real-time communication platform that enables developers to build interactive audio and video experiences into their applications. 
+   -- It provides a set of tools and APIs for handling all the complexities of real-time communication, allowing developers to focus on building engaging features and user    interfaces.
+   -- Used here for the generation of Server URL and Stream Key based on the type of protocol - RTPC(Real Time Trans Pro) and/or WHIP()
+
+   -- Manages sessions and rooms: Creates and manages live sessions, including participant join/leave actions, room management, and session configuration.
+   -- Routes and distributes media streams: Receives audio and video streams from clients, processes them, and routes them efficiently to all participants in the session.
+   -- Security and moderation: Implements user authentication, authorization, and session security measures, as well as providing tools for moderation and managing participant behavior.
+
+--- Used useTransiton Hook :
+   -- useTransition is a new React Hook introduced in React 18 that allows you to manage the priority and timing of state updates.
+   --  It helps you prioritize critical updates that need to be displayed immediately and defer less important updates that can be rendered later, improving the perceived responsiveness of your application.
+
+--- Used useRef Hook :
+   -- useRef is a hook that lets you create a mutable reference to a value.
+   -- This means you can store a value and update it later without triggering a re-render of the component.
