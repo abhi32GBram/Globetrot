@@ -1,7 +1,7 @@
 "use client";
 
 // Import relevant types from Prisma client
-import { Follow, Stream, User } from "@prisma/client";
+import { Follow, User } from "@prisma/client";
 
 // Access sidebar state using useSidebar hook from store
 import { useSidebar } from "@/store/use-sidebar";
@@ -13,7 +13,7 @@ import { UserItem, UserItemSkeleton } from "./user-item";
 interface FollowingProps {
     data: (Follow & {
         following: User & {
-            stream: Stream | null
+            stream: { isLive: boolean } | null
         }
     })[]; // Array of Follow objects with enriched User data
 }

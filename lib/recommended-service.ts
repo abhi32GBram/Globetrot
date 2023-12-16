@@ -38,7 +38,11 @@ export const getRecommended = async () => {
                 }]
             },
             include: {
-                stream: true
+                stream: {
+                    select: {
+                        isLive: true
+                    }
+                }
             },
             orderBy: {
                 createdAt: "desc"
@@ -47,7 +51,11 @@ export const getRecommended = async () => {
     } else {
         users = await db.user.findMany({
             include: {
-                stream: true
+                stream: {
+                    select: {
+                        isLive: true
+                    }
+                }
             },
             orderBy: {
                 createdAt: "desc"
@@ -60,7 +68,7 @@ export const getRecommended = async () => {
 }
 
 //-------------------------------------------------------------------------------------------------------------------
-// WELL COMMENTED COUNTERPART OF THE CODE ABOVE FOR EXPLANAITON WITHOUT BREAKING THE CODE ITSELF 
+// WELL COMMENTED COUNTERPART OF THE CODE ABOVE FOR EXPLANAITON WITHOUT BREAKING THE CODE ITSELF
 
 // Import the database instance from a custom path and a function to get current user's details.
 // // // import { db } from "@/lib/db";
@@ -91,7 +99,7 @@ export const getRecommended = async () => {
 // // //                         NOT: {
 // // //                             id: userId
 // // //                         },
-// // //                     }, 
+// // //                     },
 // // //                     // The user should not be followed by the current user.
 // // //                     {
 // // //                         NOT: {

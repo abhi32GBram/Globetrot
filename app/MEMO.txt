@@ -128,4 +128,33 @@ LiveKit Webhook :
    -- Creates a new ingress object using these options.
    -- Throws an error if the ingress creation fails, which is a crucial check to ensure the streaming setup is correct.
 
-   
+----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Commit For 
+Granting Viewer Token : 
+
+--- Access Token function (import { AccessToken } from "livekit-server-sdk") :
+   -- Plays a crucial role in managing access tokens for your LiveKit server application
+   -- Access tokens act as digital keys that grant users or applications permission to perform specific actions within your LiveKit server.
+   -- By requiring valid access tokens for authorized access, you can improve the security of your LiveKit server and prevent unauthorized access to resources.
+   -- Access tokens can be used to manage user sessions and associate them with specific permissions within the LiveKit environment.
+
+--- Using the UUID Package (npm i uuid ) :
+   -- Manages the generation and handling of Universally Unique Identifiers (UUIDs) in your JavaScript projects.
+   -- UUIDs are unique strings used to identify different entities in your application, ensuring they don't clash
+   -- You can choose to generate UUIDs in versions 1 (timestamp-based), 4 (randomly generated), 5 (namespace-based) == I used V4
+   -- This helps in 
+      - Guaranteed uniqueness: UUIDs ensure unique identification for your entities, preventing conflicts and errors.
+      - Improved data consistency: Consistent identifiers simplify data management and retrieval within your application.
+      - Enhanced security: Randomly generated UUIDs can enhance security by preventing predictable identifiers.
+      - Simpler code and reduced errors: The provided API makes working with UUIDs easier and less prone to errors.
+
+--- Using JWT Decode Package ( npm i jwt-decode ) :
+   -- Decoding JSON Web Tokens (JWTs) in JavaScript.
+   -- It helps you extract the payload data from a JWT token without the need for a full-fledged JWT library like jsonwebtoken.
+   -- Also helps by :
+      - Simple and lightweight: Easy to install and use, with minimal impact on your application's size and complexity.
+      - Fast and efficient: Decodes tokens quickly and efficiently without any heavy processing overhead.
+      - Focused on payload extraction: Solely focuses on extracting the payload data, making it ideal for situations where you only need the token's content.
+      - Independent of JWT libraries: Can be used independently of other JWT libraries like jsonwebtoken, providing a simpler solution for basic token decoding.
+

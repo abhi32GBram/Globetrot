@@ -12,7 +12,7 @@ import { UserItem } from "./user-item";
 // This specifies that the 'data' prop will be an array of User objects.
 interface RecommendedProps {
     data: (User & {
-        stream: Stream | null
+        stream: { isLive: boolean } | null
     })[]
 }
 
