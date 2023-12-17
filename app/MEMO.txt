@@ -172,4 +172,27 @@ Video Player (Finally ffs) :
 --- Added some misc security measures for the client-side components (route.ts of LiveKit API folder) where sensitive data was being exposed
 --- Added functionality for the screen - video and audio (user mic & pc sounds) are functioning properly with minimal lag 
 
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Commit for 
+Chat functionality :
+
+--- Using the Date FNS package (npm i date-fns) :
+   -- Date-fns is a popular JavaScript library that provides a rich set of functions for manipulating and formatting dates and times.
+   -- Its features include :
+      - Parse and format dates: Easily convert between human-readable formats and JavaScript timestamps.
+      - Add and subtract time: Work with durations, intervals, and timezones with ease.
+      - Relative dates: Express dates in relative terms like "yesterday" or "next week".
+      - Localization: Format dates according to different locales and conventions. 
+      - Immutable API: Maintain predictable code behavior by avoiding mutations.
+
+--- Added Chat Sidebar to be able to Expand and Collapse the Chat
+--- Added the Community-Chat Toggle Button
+--- Added the Chat Box with timestamp based chatting and uniquely color coded usernames for the person chatting 
+--- Added the device friendly layouts for the chats 
+--- Added reactive chat being enabled or disabled based on the status of the host being Live or offline
+--- Added conditional labels for the chat based on - Followers Only and/or Slow Mode
+
+
+
 
