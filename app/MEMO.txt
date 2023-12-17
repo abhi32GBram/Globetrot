@@ -216,9 +216,17 @@ Community Toggle Section :
 --- Added plathora of skeletons for various sections of the stream player and chat sidebar responsive to devices
 --- Added scroll area section from Shadcn UI for the chat and community section 
 
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+Commit for 
+Stream Header :
 
-
+--- Added the Stream header to show the State of the stream page 
+--- Included the Avatar of the streamer
+--- Included the name of the stream room 
+--- Added the viewer count 
+--- Added a verification badge to show authentication
+--- Added the functional follow button (Front and Back)
 
 
 

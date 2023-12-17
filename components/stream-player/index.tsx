@@ -48,6 +48,13 @@ export const StreamPlayer = ({ user, stream, isFollowing }: StreamPlayerProps) =
                 )}>
                 <div className="space-y-4 col-span-1 lg:col-span-2 xl:col-span-2 2xl:col-span-5 lg:overflow-y-auto hidden-scrollbar pb-10">
                     <Video hostName={user.username} hostIdentity={user.id} />
+                    <Header
+                        hostName={user.username}
+                        hostIdentity={user.id}
+                        viewerIdentity={identity}
+                        imageUrl={user.imageUrl}
+                        isFollowing={isFollowing}
+                        name={stream.name} />
                 </div>
                 <div className={cn(
                     "col-span-1",
@@ -68,14 +75,15 @@ export const StreamPlayer = ({ user, stream, isFollowing }: StreamPlayerProps) =
     );
 };
 
-import React from 'react'
+import React, { use } from 'react'
+import { Header, HeaderSkeleton } from "./header";
 
 export const StreamPlayerSkeleton = () => {
     return (
         <div className="grid grid-cols-1 lg:gap-y-0 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-6 h-full">
             <div className="space-y-4 col-span-1 lg:col-span-2 xl:col-span-2 2xl:col-span-5 lg:overflow-y-auto hidden-scrollbar pb-10">
                 <VideoSkeleton />
-                {/* ADD THE HEAD SKELETON COMPONENT HERE */}
+                <HeaderSkeleton />
             </div>
             <div className="col-span-1 bg-background">
                 <ChatSkeleton />
@@ -89,62 +97,68 @@ export const StreamPlayerSkeleton = () => {
 /// WELL COMMENTED CODE FOR UNDERSTANDING AND NOT BREAKING ORIGINAL CODE
 // // =========================================================================================================================
 
-// // // Importing components and hooks from various libraries.
-// // import { LiveKitRoom } from "@livekit/components-react";
-// // import { useViewerToken } from '@/hooks/use-viewer-token';
-// // import { useChatSidebar } from "@/store/use-chat-sidebar";
-// // import { cn } from "@/lib/utils";
-// // import { Stream, User } from '@prisma/client';
-// // import { Video } from "./video";
-// // import { Chat } from "./chat";
-// // import { ChatToggle } from "./chat-toggle";
+// // // Importing necessary modules and components
+// // import { LiveKitRoom } from "@livekit/components-react"; // Component for LiveKit room
+// // import { useViewerToken } from '@/hooks/use-viewer-token'; // Hook to get viewer token
 
-// // // Defining the structure of the props for the StreamPlayer component.
+// // import { useChatSidebar } from "@/store/use-chat-sidebar"; // State management hook for chat sidebar
+// // import { cn } from "@/lib/utils"; // Utility function for conditional class names
+
+// // import { Stream, User } from '@prisma/client'; // Prisma models for Stream and User
+
+// // import { Video, VideoSkeleton } from "./video"; // Video component and its skeleton
+// // import { Chat, ChatSkeleton } from "./chat"; // Chat component and its skeleton
+// // import { ChatToggle } from "./chat-toggle"; // Chat toggle component
+// // import { Skeleton } from "@/components/ui/skeleton"; // Skeleton component for loading states
+
+// // // Interface for StreamPlayerProps
 // // interface StreamPlayerProps {
-// //     user: User & { stream: Stream | null };
-// //     stream: Stream;
-// //     isFollowing: boolean;
+// //     user: User & { stream: Stream | null }; // User object with nested stream object
+// //     stream: Stream; // Stream object
+// //     isFollowing: boolean; // Boolean to check if the viewer is following
 // // }
 
-// // // Exporting the StreamPlayer functional component with destructured props.
+// // // The StreamPlayer component
 // // export const StreamPlayer = ({ user, stream, isFollowing }: StreamPlayerProps) => {
-// //     // Getting token, name, and identity for the viewer using a custom hook.
-// //     const { token, name, identity } = useViewerToken(user.id);
+// //     const { token, name, identity } = useViewerToken(user.id); // Get viewer token and details
 
-// //     // Accessing the collapsed state from the chat sidebar store.
-// //     const { collapsed } = useChatSidebar()
+// //     const { collapsed } = useChatSidebar() // State of the chat sidebar
 
-// //     // Conditional rendering if token, name, or identity is not available.
+// //     // Conditional rendering based on token and identity availability
 // //     if (!token || !name || !identity) {
 // //         return (
 // //             <div>
-// //                 Cannot Watch the Stream
+// //                 <StreamPlayerSkeleton /> // Render skeleton if token or identity is missing
 // //             </div>
 // //         );
 // //     }
 
-// //     // Rendering the main component structure.
+// //     // Main component rendering
 // //     return (
 // //         <>
-// //             {/* Conditional rendering of the ChatToggle button based on the sidebar state. */}
 // //             {collapsed && (
 // //                 <div className="hidden lg:block fixed top-[100px] right-2 z-50">
-// //                     <ChatToggle />
+// //                     <ChatToggle /> // Chat toggle button for large screens
 // //                 </div>
 // //             )}
-// //             {/* LiveKitRoom component for the live stream. */}
 // //             <LiveKitRoom
 // //                 token={token}
 // //                 serverUrl={process.env.NEXT_PUBLIC_LIVEKIT_WS_URL}
 // //                 className={cn(
+// //                     // Conditional classes based on chat sidebar state
 // //                     "grid grid-cols-1 lg:gap-y-0 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-6 h-full",
 // //                     collapsed && "lg:grid-cols-2 xl:grid-cols-2 2xl:grid-cols-2"
 // //                 )}>
-// //                 {/* Video component for displaying the stream. */}
 // //                 <div className="space-y-4 col-span-1 lg:col-span-2 xl:col-span-2 2xl:col-span-5 lg:overflow-y-auto hidden-scrollbar pb-10">
-// //                     <Video hostName={user.username} hostIdentity={user.id} />
+// //                     <Video hostName={user.username} hostIdentity={user.id} /> // Video component
+// //                     <Header
+// //                         hostName={user.username}
+// //                         hostIdentity={user.id}
+// //                         viewerIdentity={identity}
+// //                         imageUrl={user.imageUrl}
+// //                         isFollowing={isFollowing}
+// //                         name={stream.name} /> // Header component
 // //                 </div>
-// //                 {/* Chat component for the live chat feature. */}
 // //                 <div className={cn(
 // //                     "col-span-1",
 // //                     collapsed && "hidden")}>
@@ -153,13 +167,30 @@ export const StreamPlayerSkeleton = () => {
 // //                         hostName={user.username}
 // //                         hostIdentity={user.id}
 // //                         isFollowing={isFollowing}
-
 // //                         isChatEnabled={stream.isChatEnabled}
 // //                         isChatDelay={stream.isChatDelay}
-// //                         isChatFollowersOnly={stream.isChatFollowersOnly} />
-
+// //                         isChatFollowersOnly={stream.isChatFollowersOnly} /> // Chat component
 // //                 </div>
 // //             </LiveKitRoom>
 // //         </>
 // //     );
 // // };
+
+// // // Import React and Header components
+// // import React, { use } from 'react'
+// // import { Header, HeaderSkeleton } from "./header";
+
+// // // StreamPlayerSkeleton component for loading state
+// // export const StreamPlayerSkeleton = () => {
+// //     return (
+// //         <div className="grid grid-cols-1 lg:gap-y-0 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-6 h-full">
+// //             <div className="space-y-4 col-span-1 lg:col-span-2 xl:col-span-2 2xl:col-span-5 lg:overflow-y-auto hidden-scrollbar pb-10">
+// //                 <VideoSkeleton /> // Skeleton for Video component
+// //                 <HeaderSkeleton /> // Skeleton for Header component
+// //             </div>
+// //             <div className="col-span-1 bg-background">
+// //                 <ChatSkeleton /> // Skeleton for Chat component
+// //             </div>
+// //         </div>
+// //     )
+// // }
