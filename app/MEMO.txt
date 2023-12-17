@@ -194,5 +194,31 @@ Chat functionality :
 --- Added conditional labels for the chat based on - Followers Only and/or Slow Mode
 
 
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Commit for 
+Community Toggle Section :
+
+--- Using the Debounce package (import { useDebounce } from 'usehooks-ts') :
+   -- useDebounce is a React hook provided by the usehooks-ts library.
+   -- It helps delay the execution of a function or an update to a state variable until a certain amount of time has passed since the last event that triggered 
+   -- Its useful in the cases like :
+      - Preventing unnecessary API calls: If you have an input field where users type, you might want to delay sending an API request for search results until they stop typing for a moment, saving unnecessary server and network resources.
+
+      - Debounced form validation: Delaying validation of user input in a form until they finish typing can improve user experience, providing feedback only when the whole input is complete.
+      
+      - Smooth animations: By debouncing state updates in animation-driven components, you can create smoother and more efficient transitions.
+
+--- Added the Community section toggle in the Chat Sidebar
+--- Added ability to view all the participants of the stream 
+--- Added ability to block any user (FrontEnd)
+--- Added ability to search any user in the stream 
+--- Added plathora of skeletons for various sections of the stream player and chat sidebar responsive to devices
+--- Added scroll area section from Shadcn UI for the chat and community section 
+
+
+
+
+
 
 

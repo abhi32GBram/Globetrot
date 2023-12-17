@@ -5,9 +5,10 @@ import { ConnectionState } from "livekit-client"
 import { useChat, useConnectionState, useRemoteParticipant } from '@livekit/components-react'
 import { useMediaQuery } from 'usehooks-ts'
 import { useEffect, useMemo, useState } from 'react'
-import { ChatHeader } from './chat-header'
-import { ChatForm } from './chat-form'
-import { ChatList } from './chat-list'
+import { ChatHeader, ChatHeaderSkeleton } from './chat-header'
+import { ChatForm, ChatFormSkeleton } from './chat-form'
+import { ChatList, ChatListSkeleton } from './chat-list'
+import { ChatCommunity } from './chat-community'
 
 
 interface ChatProps {
@@ -62,7 +63,7 @@ export const Chat = ({ hostName, hostIdentity, viewerName, isFollowing, isChatEn
             <ChatHeader />
             {variant === ChatVariant.CHAT && (
                 <>
-                <ChatList messages={reversedMessages} isHidden={isHidden}/>
+                    <ChatList messages={reversedMessages} isHidden={isHidden} />
                     <ChatForm
                         onSubmit={onSubmit}
                         value={value}
@@ -75,17 +76,28 @@ export const Chat = ({ hostName, hostIdentity, viewerName, isFollowing, isChatEn
                 </>
             )}
             {variant === ChatVariant.COMMUNITY && (
-                <p>
-                    CCOMMMUU
-                </p>
+                <ChatCommunity viewerName={viewerName} hostName={hostName} isHidden={isHidden} />
             )}
         </div>
     );
 }
 
 
+
+
+export const ChatSkeleton = () => {
+    return (
+        <div className='flex flex-col border-l  border-b pt-0 h-[calc(100vh-80px)] border-2'>
+            <ChatHeaderSkeleton />
+            <ChatListSkeleton />
+            <ChatFormSkeleton />
+        </div>
+    )
+}
+
+
 // // =========================================================================================================================
-/// WELL COMMENTED CODE FOR UNDERSTANDING AND NOT BREAKING ORIGINAL CODE 
+/// WELL COMMENTED CODE FOR UNDERSTANDING AND NOT BREAKING ORIGINAL CODE
 // // =========================================================================================================================
 
 // // // Importing various hooks and components from different sources.
