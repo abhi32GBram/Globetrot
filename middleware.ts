@@ -10,7 +10,7 @@ import { authMiddleware } from "@clerk/nextjs";
 
 // "/" is for the user to be able to land on the home page without the need to sign-in 
 export default authMiddleware({
-    publicRoutes: ["/", "/api/webhooks(.*)"]
+    publicRoutes: ["/", "/api/webhooks(.*)", "/api/uploadthing"]
 });
 
 export const config = {

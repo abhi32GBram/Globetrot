@@ -228,5 +228,15 @@ Stream Header :
 --- Added a verification badge to show authentication
 --- Added the functional follow button (Front and Back)
 
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Commit for 
+
+Stream Info Card :
+
+--- Added the separated section for the fields of information of the stream itself like - name and thumbnail 
+--- Added a modal subsection to edit the Title 
+--- Added a modal subsection to add and/or remove the stream thumbnail
+
 
 

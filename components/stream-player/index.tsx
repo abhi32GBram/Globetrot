@@ -54,7 +54,15 @@ export const StreamPlayer = ({ user, stream, isFollowing }: StreamPlayerProps) =
                         viewerIdentity={identity}
                         imageUrl={user.imageUrl}
                         isFollowing={isFollowing}
-                        name={stream.name} />
+                        name={stream.name}
+                    />
+                    <InfoCard
+                        hostIdentity={user.id}
+                        viewerIdentity={identity}
+                        name={stream.name}
+                        thumbnailUrl={stream.thumbnailUrl}
+                    />
+
                 </div>
                 <div className={cn(
                     "col-span-1",
@@ -77,6 +85,7 @@ export const StreamPlayer = ({ user, stream, isFollowing }: StreamPlayerProps) =
 
 import React, { use } from 'react'
 import { Header, HeaderSkeleton } from "./header";
+import { InfoCard } from "./info-card";
 
 export const StreamPlayerSkeleton = () => {
     return (
