@@ -18,7 +18,6 @@ interface ChatCommunityProps {
 }
 
 
-
 export const ChatCommunity = ({ hostName, viewerName, isHidden }: ChatCommunityProps) => {
 
     const [value, setValue] = useState("")

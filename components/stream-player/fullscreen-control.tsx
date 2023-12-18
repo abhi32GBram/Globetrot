@@ -7,7 +7,7 @@ interface FullscreenControlProps {
     onToggle: () => void
 }
 
-import React from 'react'
+
 
 export const FullscreenControl = ({ isFullscreen, onToggle }: FullscreenControlProps) => {
     const Icon = isFullscreen ? Minimize : Maximize

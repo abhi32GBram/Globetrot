@@ -238,5 +238,25 @@ Stream Info Card :
 --- Added a modal subsection to edit the Title 
 --- Added a modal subsection to add and/or remove the stream thumbnail
 
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Commit for 
+
+User / Trottor Channel Page :
+
+--- Added the user bio editor modal 
+--- Added the final user page details from Dashboard to the channel page 
+--- Added ability to block any User by the host 
+--- Added the abliity to remove the streamer from the Following/Recommended section upon being blocked by that host 
+--- Added the ablility to disconnect the blocked user in real time and showing a 404 when trying to rewatch
+--- Added the ablility to follow and unfollow the streamer (Front & Back)
+--- Added the global 404 page 
+--- Added the channel specific 404 page 
+--- Added the Error pages for rare cases 
+--- Added the working toggles for chat - follwers only, slow mode & both (Front and Back)
+--- Added the followers count of the streamer 
+--- Added the abliity to upload thumbnails for the stream (Uploadthing)
+--- Added the ability to edit the title, thumnail, bio of the stream(er)
+
 
 

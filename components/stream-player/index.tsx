@@ -11,10 +11,12 @@ import { Stream, User } from '@prisma/client';
 import { Video, VideoSkeleton } from "./video";
 import { Chat, ChatSkeleton } from "./chat";
 import { ChatToggle } from "./chat-toggle";
-import { Skeleton } from "@/components/ui/skeleton";
 
 interface StreamPlayerProps {
-    user: User & { stream: Stream | null };
+    user: User & {
+        stream: Stream | null,
+        _count: { followedBy: number }
+    };
     stream: Stream;
     isFollowing: boolean;
 }
@@ -56,11 +58,20 @@ export const StreamPlayer = ({ user, stream, isFollowing }: StreamPlayerProps) =
                         isFollowing={isFollowing}
                         name={stream.name}
                     />
+
                     <InfoCard
                         hostIdentity={user.id}
                         viewerIdentity={identity}
                         name={stream.name}
                         thumbnailUrl={stream.thumbnailUrl}
+                    />
+
+                    <AboutCard
+                        hostName={user.username}
+                        hostIdentity={user.id}
+                        viewerIdentity={identity}
+                        bio={user.bio}
+                        followedByCount={user._count.followedBy}
                     />
 
                 </div>
@@ -86,6 +97,7 @@ export const StreamPlayer = ({ user, stream, isFollowing }: StreamPlayerProps) =
 import React, { use } from 'react'
 import { Header, HeaderSkeleton } from "./header";
 import { InfoCard } from "./info-card";
+import { AboutCard } from "./about-card";
 
 export const StreamPlayerSkeleton = () => {
     return (

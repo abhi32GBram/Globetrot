@@ -1,33 +1,35 @@
-"use client"
+"use client";
 
-import { useTransition } from "react"
+import { toast } from "sonner";
+import { useTransition } from "react";
+import { MinusCircle } from "lucide-react";
 
-import { toast } from "sonner"
-import { Hint } from "@/components/hint"
-import { MinusCircle } from "lucide-react"
-
-import { onBlock } from "@/actions/block"
-import { cn, stringToColor } from "@/lib/utils"
-import { Button } from "@/components/ui/button"
-
-import React from 'react'
+import { Hint } from "@/components/hint";
+import { onBlock } from "@/actions/block";
+import { cn, stringToColor } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
 
 interface CommunityItemProps {
-    hostName: string
-    viewerName: string
-    participantName?: string
-    participantIdentity: string
-}
-export const CommunityItem = ({ hostName, viewerName, participantIdentity, participantName }: CommunityItemProps) => {
+    hostName: string;
+    viewerName: string;
+    participantName?: string;
+    participantIdentity: string;
+};
 
-    const [isPending, startTransition] = useTransition()
-    const isSelf = participantName === viewerName
-    const isHost = participantName === hostName
+export const CommunityItem = ({
+    hostName,
+    viewerName,
+    participantIdentity,
+    participantName,
+}: CommunityItemProps) => {
+    const [isPending, startTransition] = useTransition();
 
-    const color = stringToColor(participantName || "")
+    const color = stringToColor(participantName || "");
+    const isSelf = participantName === viewerName;
+    const isHost = viewerName === hostName;
 
     const handleBlock = () => {
-        if (!participantName || isSelf || !isHost) return
+        if (!participantName || isSelf || !isHost) return;
 
         startTransition(() => {
             onBlock(participantIdentity)
@@ -46,14 +48,21 @@ export const CommunityItem = ({ hostName, viewerName, participantIdentity, parti
             </p>
             {isHost && !isSelf && (
                 <Hint label="Block">
-                    <Button className="h-auto w-auto  p-1 opacity-0 group-hover:opacity-100 transition" onClick={handleBlock} disabled={isPending} variant="ghost">
+                    <Button
+                        variant="ghost"
+                        disabled={isPending}
+                        onClick={handleBlock}
+                        className="h-auto w-auto p-1 opacity-0 group-hover:opacity-100 transition">
                         <MinusCircle className="h-4 w-4 text-muted-foreground" />
                     </Button>
                 </Hint>
             )}
         </div>
-    )
-}
+    );
+};
+
+
+
 
 // // =========================================================================================================================
 /// WELL COMMENTED CODE FOR UNDERSTANDING AND NOT BREAKING ORIGINAL CODE
