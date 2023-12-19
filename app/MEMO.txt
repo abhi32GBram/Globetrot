@@ -259,4 +259,13 @@ User / Trottor Channel Page :
 --- Added the ability to edit the title, thumnail, bio of the stream(er)
 
 
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+Commit for 
+
+Home Page / Landing Page
+
+--- Added a dynamicly updated home page listing all the live and offline streamers 
+--- Added skeletons for the home page 
+--- Added the ability to not see the stream's of the host if they have blocked you on the home page aswell 
+--- Added an extensive and responsive home page streamer 
