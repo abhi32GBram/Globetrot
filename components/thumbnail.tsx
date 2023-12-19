@@ -1,28 +1,30 @@
+import Image from "next/image";
+
+import { Skeleton } from "@/components/ui/skeleton";
+import { LiveBadge } from "@/components/live-badge";
+import { UserAvatar } from "@/components/user-avatar";
+
 interface ThumbnailProps {
-    src: string | null
-    fallback: string
-    isLive: boolean
-    username: string
-}
+    src: string | null;
+    fallback: string;
+    isLive: boolean;
+    username: string;
+};
 
-import React from 'react'
-import { UserAvatar } from '@/components/user-avatar'
-import Image from 'next/image'
-import { Skeleton } from '@/components/ui/skeleton'
+export const Thumbnail = ({ src, fallback, isLive, username, }: ThumbnailProps) => {
+    
+    let content;
 
-
-export const Thumbnail = ({ src, fallback, isLive, username }: ThumbnailProps) => {
-
-    let content
     if (!src) {
         content = (
-            <div className='bg-background flex flex-col items-center justify-center gap-y-4 h-full w-full transition-transform group-hover:translate-x-2 group-hover:-translate-y-2 rounded-md'>
+            <div className="bg-background flex flex-col items-center justify-center gap-y-4 h-full w-full transition-transform group-hover:translate-x-2 group-hover:-translate-y-2 rounded-md">
                 <UserAvatar
                     size="lg"
                     showBadge
-                    isLive={isLive}
                     username={username}
-                    imageUrl={fallback} />
+                    imageUrl={fallback}
+                    isLive={isLive}
+                />
             </div>
         )
     } else {
@@ -35,24 +37,28 @@ export const Thumbnail = ({ src, fallback, isLive, username }: ThumbnailProps) =
             />
         )
     }
-    return (
-        <div className='group aspect-video relative rounded-md cursor-pointer'>
-            <div className=' rounded-md absolute inset-0 bg-purple-500 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center '>
-            </div>
-            {content}
-        </div>
-    )
-}
 
+    return (
+        <div className="group aspect-video relative rounded-md cursor-pointer">
+            <div className="rounded-md absolute inset-0 bg-purple-600 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center" />
+            {content}
+            {isLive && src && (
+                <div className="absolute top-2 left-2 group-hover:translate-x-2 group-hover:-translate-y-2 transition-transform">
+                    <LiveBadge />
+                </div>
+            )}
+        </div>
+    );
+};
 
 export const ThumbnailSkeleton = () => {
     return (
-        <div className=' group aspect-video relative rounded-xl cursor-pointer'>
-            <Skeleton className='h-full w-full' />
+        <div className="group aspect-video relative rounded-xl cursor-pointer">
+            <Skeleton className="h-full w-full" />
         </div>
+    );
+};
 
-    )
-}
 
 // // =========================================================================================================================
 /// WELL COMMENTED CODE FOR UNDERSTANDING AND NOT BREAKING ORIGINAL CODE

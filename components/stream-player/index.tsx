@@ -12,12 +12,29 @@ import { Video, VideoSkeleton } from "./video";
 import { Chat, ChatSkeleton } from "./chat";
 import { ChatToggle } from "./chat-toggle";
 
+type CustomStream = {
+    id: string
+    isLive: boolean
+    isChatDelay: boolean
+    isChatEnabled: boolean
+    isChatFollowersOnly: boolean
+    thumbnailUrl: string | null
+    name: string
+}
+
+type CustomerUser = {
+    id: string
+    username: string
+    bio: string | null
+    stream: CustomStream | null
+    imageUrl: string
+    _count: { followedBy: number }
+}
+
+
 interface StreamPlayerProps {
-    user: User & {
-        stream: Stream | null,
-        _count: { followedBy: number }
-    };
-    stream: Stream;
+    user: CustomerUser
+    stream: CustomStream;
     isFollowing: boolean;
 }
 

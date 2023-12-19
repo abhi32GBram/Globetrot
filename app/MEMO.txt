@@ -269,3 +269,17 @@ Home Page / Landing Page
 --- Added skeletons for the home page 
 --- Added the ability to not see the stream's of the host if they have blocked you on the home page aswell 
 --- Added an extensive and responsive home page streamer 
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Commit for 
+
+Search Page "
+
+--- Added the search term page 
+--- Added the abilty to retrieve the streamer page using Search Bar (Font & Back )
+--- Added the ability to view the online or offline streamer pages 
+--- Added the ability to see since how long has it been since they streamed 
+--- Added the ability to be able to search a stream if the search term is remotely accurate
+--- Added the ability to redirect the to home page user who tried to go to 3000/search
+--- Added the ability to view only those streamer in the search results who havent banned you
