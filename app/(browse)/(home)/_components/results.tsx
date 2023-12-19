@@ -8,9 +8,9 @@ export const Results = async () => {
     const data = await getStreams()
     return (
         <div>
-            <h2 className='text-lg font-semibold mb-4'>
+            <h1 className='text-2xl font-semibold mb-4'>
                 Streams We Think You Will Like !!
-            </h2>
+            </h1>
 
             {data.length === 0 && (
                 <div className=' text-muted-foreground text-sm'>

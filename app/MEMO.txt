@@ -274,7 +274,7 @@ Home Page / Landing Page
 
 Commit for 
 
-Search Page "
+Search Page : 
 
 --- Added the search term page 
 --- Added the abilty to retrieve the streamer page using Search Bar (Font & Back )
@@ -283,3 +283,20 @@ Search Page "
 --- Added the ability to be able to search a stream if the search term is remotely accurate
 --- Added the ability to redirect the to home page user who tried to go to 3000/search
 --- Added the ability to view only those streamer in the search results who havent banned you
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Commit for : 
+
+Community Page Unblock Data Table :
+
+--- Added the Community section 
+--- Added the Data table using Shadcn UI for handling the Blocked Users  and also handles:
+   -- The avatar, username, date of being blocked, Unblock button (Front and Back )
+   -- Pagination for the table when the blocked users go above 10 count
+   -- Dynamically updating all the pages where the streamer was visible 
+   -- Dynamically and in real time be able to view the stream again upon being unblocked 
+   -- Revalidating the data table unpon unblocking or blocking to keep the table updated with the latest info 
+   

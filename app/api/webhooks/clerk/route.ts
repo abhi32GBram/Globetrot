@@ -4,6 +4,7 @@ import { Webhook } from 'svix'
 import { headers } from 'next/headers'
 import { WebhookEvent } from '@clerk/nextjs/server'
 import { db } from '@/lib/db'
+import { resetIngresses } from '@/actions/ingress'
 
 // Import necessary libraries and modules. 'svix' is for handling webhooks, 
 // 'next/headers' for dealing with request headers, 'WebhookEvent' is a type from Clerk's Next.js library,
@@ -101,6 +102,7 @@ export async function POST(req: Request) {
             }
         });
     } else if (eventType === "user.deleted") {
+        await resetIngresses(payload.data.id)
         // Handle user deletion event
         await db.user.delete({
             where: { externalUserId: payload.data.id }
